@@ -1,6 +1,7 @@
 from amigo.functions.base_functions import BaseFunction
 from amigo.managers import ModelManager
 from amigo.models import User
+from amigo.functions.private.help import PrivateHelp
 
 
 class PrivateStart(BaseFunction):
@@ -21,3 +22,5 @@ class PrivateStart(BaseFunction):
             self.bot.reply_to(message, 'Bot is started')
         else:
             self.bot.reply_to(message, 'Bot is already started')
+
+        self.next(message, PrivateHelp)

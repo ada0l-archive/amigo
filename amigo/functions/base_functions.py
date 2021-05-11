@@ -16,6 +16,10 @@ class BaseFunction(ABC):
         return message and message.chat.type == 'private'
 
     @staticmethod
+    def commandRegex(command):
+        return f"^/{command}( |$|@)(?i)"
+
+    @staticmethod
     def info():
         """
         Return information about routing of this command
@@ -41,3 +45,6 @@ class BaseFunction(ABC):
         :param message
         """
         pass
+
+    def next(self, message, func):
+        func.init(self.env, self.bot, self.db)(message)
