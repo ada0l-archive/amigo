@@ -14,4 +14,5 @@ class GroupHelp(BaseFunction):
             "santa event.\n"
             "/start - launch bot in group\n"
             "/join - take part in the event\n"
+            "/help - show this message"
         )
