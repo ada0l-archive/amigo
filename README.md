@@ -4,6 +4,9 @@ Amigo
 Telegram bot that helps automate the secret santa event
 
 ## Build and Run
+    mv .env.sample .env
+
+Put correct token in .env
 
     docker-compose build
     docker-compose run bot
