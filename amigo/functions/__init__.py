@@ -5,6 +5,7 @@ from amigo.functions.group.start import GroupStart
 from amigo.functions.group.stop import GroupStop
 from amigo.functions.private.choose import PrivateChoose
 from amigo.functions.private.edit import PrivateEdit
+from amigo.functions.private.father import Father
 from amigo.functions.private.help import PrivateHelp
 from amigo.functions.private.set_current_user_chat import \
     PrivateSetCurrentUserChat
@@ -23,4 +24,5 @@ __all__ = [
     'PrivateStart',
     'PrivateText',
     'PrivateEdit',
+    'Father'
 ]
