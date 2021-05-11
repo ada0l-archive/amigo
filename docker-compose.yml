@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  bot:
+    build: .
+    volumes:
+      - .:/amigo
+    environment:
+      - TELEGRAM_BOT_TOKEN
+      - DATABASE_URL
