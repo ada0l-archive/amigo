@@ -24,14 +24,23 @@ class GroupSend(BaseFunction):
         )
 
         if len(participants) < 2:
-            self.bot.reply_to(message, "too few participants")
+            self.bot.reply_to(message, "There aren't enough participants")
             return
 
-        for item in participants:
-            if item.status != ParticipationStatus.COMPLETE:
-                self.bot.reply_to(message, "Not all participants filled in "
-                                           "the data ")
-                return
+        all_complete = True
+        for participant in participants:
+            if participant.status != ParticipationStatus.COMPLETE:
+                all_complete = False
+                self.bot.send_message(
+                    participant.user.telegram_id,
+                    "you didn't fill in the fields for the "
+                    f"{participant.chat.title} group "
+                )
+
+        if not all_complete:
+            self.bot.reply_to(message, "Not all participants filled in "
+                                       "the data ")
+            return
 
         random.shuffle(participants)
 
