@@ -33,13 +33,13 @@ class GroupJoin(BaseFunction):
             self.bot.reply_to(message, "You are not start me in private chat")
             return
 
-        part = ModelManager(self.db, Participation).create(
+        part, was_created = ModelManager(self.db, Participation).create(
             allow_duplication=False,
             user=user,
             chat=chat
         )
 
-        if part:
+        if was_created:
             self.bot.reply_to(message, "You are joined")
         else:
             self.bot.reply_to(message, "You are already joined")
