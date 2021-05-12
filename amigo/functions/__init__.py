@@ -2,6 +2,7 @@ from amigo.functions.group.help import GroupHelp
 from amigo.functions.group.join import GroupJoin
 from amigo.functions.group.send import GroupSend
 from amigo.functions.group.start import GroupStart
+from amigo.functions.group.status import GroupStatus
 from amigo.functions.group.stop import GroupStop
 from amigo.functions.private.choose import PrivateChoose
 from amigo.functions.private.edit import PrivateEdit
@@ -24,5 +25,6 @@ __all__ = [
     'PrivateStart',
     'PrivateText',
     'PrivateEdit',
-    'Father'
+    'Father',
+    'GroupStatus'
 ]
