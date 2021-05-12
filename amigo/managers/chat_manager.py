@@ -1,5 +1,5 @@
-from amigo.managers.model_manager import ModelManager
 from amigo.database import DataBase
+from amigo.managers.model_manager import ModelManager
 from amigo.models import Chat
 
 

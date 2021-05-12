@@ -1,6 +1,7 @@
 """Bot class module"""
 
 import telebot
+
 import amigo.functions
 
 

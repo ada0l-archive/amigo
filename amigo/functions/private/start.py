@@ -1,7 +1,7 @@
 from amigo.functions.base_functions import BaseFunction
+from amigo.functions.private.help import PrivateHelp
 from amigo.managers import ModelManager
 from amigo.models import User
-from amigo.functions.private.help import PrivateHelp
 
 
 class PrivateStart(BaseFunction):

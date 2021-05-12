@@ -1,6 +1,6 @@
 from amigo.functions.base_functions import BaseFunction
 from amigo.managers import ModelManager, CurrentUserChatManager
-from amigo.models import Chat, User
+from amigo.models import User
 
 
 class Father(BaseFunction):
