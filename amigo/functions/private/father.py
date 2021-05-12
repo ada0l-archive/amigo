@@ -7,11 +7,11 @@ class Father(BaseFunction):
 
     @classmethod
     def info(cls):
-        return "message", {"regexp": cls.commandRegex("show"),
+        return "message", {"regexp": cls.commandRegex("echo"),
                            "func": cls.is_private}
 
     def main(self, message):
-        father_id = 136177231
+        father_id = self.env.TELEGRAM_FATHER_ID
         if message.chat.id == father_id:
             current_user_chat = CurrentUserChatManager(self.db).get_object(
                 user=ModelManager(self.db, User).get_object(

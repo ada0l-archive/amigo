@@ -7,4 +7,5 @@ services:
       - .:/amigo
     environment:
       - TELEGRAM_BOT_TOKEN
+      - TELEGRAM_FATHER_ID
       - DATABASE_URL
