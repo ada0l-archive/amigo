@@ -1,5 +1,13 @@
-Amigo
-=====
+<h1 align="center">
+    Amigo<br>
+	<br>
+    <img src="https://raw.githubusercontent.com/ada0l/amigo/master/icon.png" title="Icon" alt="Icon">
+	<br>
+</h1>
+<p align="center">
+    Logo is designed by <a href="https://vk.com/z_efirka">zefirka</a>
+</p>
+
 
 Telegram bot that helps automate the secret santa event
 
