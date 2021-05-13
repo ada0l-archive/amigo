@@ -1,5 +1,7 @@
 """Bot class module"""
 
+import logging
+
 import telebot
 
 import amigo.functions
@@ -7,12 +9,15 @@ import amigo.functions
 
 class Bot:
     """Bot class"""
-    def __init__(self, env, db):
+    def __init__(self, env, db, log=False):
         token = env.TELEGRAM_BOT_TOKEN
 
         self.env = env
         self.bot = telebot.TeleBot(token)
         self.db = db
+
+        if log:
+            telebot.logger.setLevel(logging.DEBUG)
 
         self.functions = []
 
