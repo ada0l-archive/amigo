@@ -4,7 +4,7 @@ import logging
 
 import telebot
 
-import amigo.functions
+import amigo.views
 
 
 class Bot:
@@ -19,24 +19,24 @@ class Bot:
         if log:
             telebot.logger.setLevel(logging.DEBUG)
 
-        self.functions = []
+        self.views = []
 
     def run(self):
         """run the bot"""
         self._register_actions()
         self.bot.polling()
 
-    def _discover_functions(self):
-        for func in dir(amigo.functions):
+    def _discover_views(self):
+        for func in dir(amigo.views):
             if str(func).startswith('_'):
                 break
-            obj = getattr(amigo.functions, func)
-            self.functions.append(obj)
+            obj = getattr(amigo.views, func)
+            self.views.append(obj)
 
     def _register_actions(self):
-        self._discover_functions()
+        self._discover_views()
 
-        for klass in self.functions:
+        for klass in self.views:
             routing_info = klass.info()
 
             trigger_info = routing_info[0]

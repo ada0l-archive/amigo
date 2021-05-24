@@ -9,10 +9,11 @@ from amigo.models.user import User
 
 
 class ParticipationStatus(enum.Enum):
-    TEXT_1 = 0
-    TEXT_2 = 1
-    TEXT_3 = 2
-    COMPLETE = 3
+    HOBBY = 0
+    WISHES = 1
+    NOT_WISHES = 2
+    ADDRESS = 3
+    COMPLETE = 4
 
 
 class Participation(BaseModel):
@@ -23,9 +24,10 @@ class Participation(BaseModel):
     chat = relationship('Chat', foreign_keys='Participation.chat_id')
     status = Column(Enum(ParticipationStatus), nullable=True,
                     default=None)
-    text_1 = Column(Text, nullable=False, default="")
-    text_2 = Column(Text, nullable=False, default="")
-    text_3 = Column(Text, nullable=False, default="")
+    hobby = Column(Text, nullable=False, default="")
+    wishes = Column(Text, nullable=False, default="")
+    not_wishes = Column(Text, nullable=False, default="")
+    address = Column(Text, nullable=False, default="")
 
     def __str__(self):
-        return f'<Participation(@{self.user.username}, {self.chat.title})>'
+        return f'<Participation(@{self.user.username}, {self.chat.telegram_id})>'

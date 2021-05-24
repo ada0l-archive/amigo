@@ -1,8 +1,8 @@
+import sys
+
 import amigo.env
 from amigo.core import Bot
 from amigo.database import DataBase
-
-import sys
 
 
 def show_help():

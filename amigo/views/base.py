@@ -1,7 +1,9 @@
 from abc import ABC
 
+from telebot.types import CallbackQuery
 
-class BaseFunction(ABC):
+
+class BaseView(ABC):
     def __init__(self, env, bot, db):
         self.env = env
         self.bot = bot
@@ -9,15 +11,15 @@ class BaseFunction(ABC):
 
     @staticmethod
     def is_group(message):
+        if isinstance(message, CallbackQuery):
+            message = message.message
         return message and message.chat.type == 'group'
 
     @staticmethod
     def is_private(message):
+        if isinstance(message, CallbackQuery):
+            message = message.message
         return message and message.chat.type == 'private'
-
-    @staticmethod
-    def commandRegex(command):
-        return f"^/{command}( |$|@)(?i)"
 
     @staticmethod
     def info():
@@ -40,10 +42,15 @@ class BaseFunction(ABC):
         return instance.main
 
     def main(self, message):
-        """
-        Endpoint
-        :param message
-        """
+        if self.is_private(message):
+            self.private(message)
+        if self.is_group(message):
+            self.group(message)
+
+    def group(self, message):
+        pass
+
+    def private(self, message):
         pass
 
     def next(self, message, func):
