@@ -22,7 +22,6 @@ class HelpView(BaseView):
             message,
             "hello amigo\n"
             "/start - start bot in private chat\n"
-            "/choose - select a group to edit\n"
             "/edit - fill in the data\n"
             "/help - show this message"
         )
