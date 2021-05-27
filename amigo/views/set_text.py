@@ -14,14 +14,24 @@ class TextView(BaseView):
     def group(self, message):
         pass
 
-    def _cancel_decorator(  func):
+    def _modify_commands(func):
         def wrapper(self, message, *args, **kwargs):
+            skip = False
             if re.match('^/cancel', message.text) is not None:
+                self.bot.reply_to(message, "Canceled")
                 return
-            value = func(self, message, *args, **kwargs)
+            if re.match('^/skip', message.text) is not None:
+                skip = True
+            value = func(self, message=message, skip=skip, *args, **kwargs)
             return value
 
         return wrapper
+
+    @staticmethod
+    def get_old_data(text):
+        if text != "":
+            return f"\n{text}\nWrite /skip to skip this field."
+        return ""
 
     def private(self, call):
         user = ModelManager(self.db, User).get_object(
@@ -43,70 +53,74 @@ class TextView(BaseView):
         self.bot.register_next_step_handler(
             self.bot.send_message(
                 call.message.chat.id,
-                "Hello, What are you hobbies?"
+                f"Hello, What are you hobbies? {self.get_old_data(participation.hobby)}"
             ),
             self.set_hobby,
             participation=participation
         )
 
-    @_cancel_decorator
-    def set_hobby(self, message, participation):
-        ModelManager(self.db, Participation).update_obj(
-            obj=participation,
-            values={
-                "hobby": message.text
-            })
+    @_modify_commands
+    def set_hobby(self, message, participation, skip=False):
+        if skip is False:
+            ModelManager(self.db, Participation).update_obj(
+                obj=participation,
+                values={
+                    "hobby": message.text
+                })
 
         self.bot.register_next_step_handler(
             self.bot.send_message(
                 message.chat.id,
-                "OK, what do you want to get?"
+                f"OK, what do you want to get? {self.get_old_data(participation.wishes)}"
             ),
             self.set_wishes,
             participation=participation
         )
 
-    @_cancel_decorator
-    def set_wishes(self, message, participation):
-        ModelManager(self.db, Participation).update_obj(
-            obj=participation,
-            values={
-                "wishes": message.text
-            })
+    @_modify_commands
+    def set_wishes(self, message, participation, skip=False):
+        if skip is False:
+            ModelManager(self.db, Participation).update_obj(
+                obj=participation,
+                values={
+                    "wishes": message.text
+                })
 
         self.bot.register_next_step_handler(
             self.bot.send_message(
                 message.chat.id,
-                "OK, what don't you want to get?"
+                f"OK, what don't you want to get? {self.get_old_data(participation.not_wishes)}"
             ),
             self.set_not_wishes,
             participation=participation
         )
 
-    @_cancel_decorator
-    def set_not_wishes(self, message, participation):
-        ModelManager(self.db, Participation).update_obj(
-            obj=participation,
-            values={
-                "not_wishes": message.text
-            })
+    @_modify_commands
+    def set_not_wishes(self, message, participation, skip=False):
+        if skip is False:
+            ModelManager(self.db, Participation).update_obj(
+                obj=participation,
+                values={
+                    "not_wishes": message.text
+                })
 
         self.bot.register_next_step_handler(
             self.bot.send_message(
                 message.chat.id,
-                "OK, What is your address?"
+                f"OK, What is your address? {self.get_old_data(participation.address)}"
             ),
             self.set_address,
             participation=participation
         )
 
-    @_cancel_decorator
-    def set_address(self, message, participation):
-        ModelManager(self.db, Participation).update_obj(
-            obj=participation,
-            values={
-                "address": message.text
-            })
+    @_modify_commands
+    def set_address(self, message, participation, skip=False):
+        if skip is False:
+            ModelManager(self.db, Participation).update_obj(
+                obj=participation,
+                values={
+                    "address": message.text
+                })
 
         self.bot.send_message(
             message.chat.id,
