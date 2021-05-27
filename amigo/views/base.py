@@ -53,6 +53,7 @@ class BaseView(ABC):
                 self.group(message)
         except Exception as e:
             print(e)
+            self.bot.reply_to(message, "Something went wrong.")
 
     def group(self, message):
         pass
@@ -62,3 +63,12 @@ class BaseView(ABC):
 
     def next(self, message, func):
         func.init(self.env, self.bot, self.db)(message)
+
+    def get_link_to_me(self, title):
+        return self.get_link(
+            title=title,
+            url=f'https://t.me/{self.bot.get_me().username}')
+
+    @staticmethod
+    def get_link(title, url):
+        return f"<a href='{url}'>{title}</a>"
