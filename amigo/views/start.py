@@ -29,7 +29,12 @@ class StartView(BaseView):
                 "username": message.from_user.username
             })
 
+
+        answer=""
         if was_created:
-            self.bot.reply_to(message, 'Bot is started')
+            answer += 'Bot is started.'
         else:
-            self.bot.reply_to(message, 'Bot is already started')
+            answer += 'Bot is already started.'
+
+        answer += " Write /edit to fill in the data for any chat."
+        self.bot.reply_to(message, answer)
