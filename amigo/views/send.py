@@ -20,6 +20,10 @@ class SendView(BaseView):
             self.bot.reply_to(message, "You dont started bot")
             return
 
+        if chat.status != ChatStatus.STARTED:
+            self.bot.reply_to(message, "Forms have already been sent ")
+            return
+
         participants = ModelManager(self.db, Participation).get_objects(
             filter={
                 "chat": chat
@@ -54,9 +58,8 @@ class SendView(BaseView):
             self.bot.reply_to(
                 message,
                 "Not all participants filled in "
-                f"the data. {not_filled_users}."
-                f"{self.get_link_to_me('Click to fill')}.",
-                parse_mode="HTML"
+                f"the data. {not_filled_users}.",
+                reply_markup=self.get_markup_with_link_to_me()
             )
             return
 

@@ -1,6 +1,7 @@
 import functools
 from abc import ABC
 
+import telebot
 from telebot.types import CallbackQuery
 
 from amigo.models import ModelManager, Chat
@@ -64,11 +65,13 @@ class BaseView(ABC):
     def next(self, message, func):
         func.init(self.env, self.bot, self.db)(message)
 
-    def get_link_to_me(self, title):
-        return self.get_link(
-            title=title,
-            url=f'https://t.me/{self.bot.get_me().username}')
-
     @staticmethod
-    def get_link(title, url):
-        return f"<a href='{url}'>{title}</a>"
+    def get_markup_with_link_to_me():
+        markup = telebot.types.InlineKeyboardMarkup(row_width=1)
+        markup.add(
+            telebot.types.InlineKeyboardButton(
+                "Send me message",
+                url="https://t.me/amigo_456_bot"
+            )
+        )
+        return markup
