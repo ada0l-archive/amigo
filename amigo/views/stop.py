@@ -9,7 +9,7 @@ class StopView(BaseView):
         return "message", {"commands": ["stop", ]}
 
     def group(self, message):
-        chat, was_deleted = ModelManager(self.db, Chat).delete(
+        was_deleted = ModelManager(self.db, Chat).delete(
             filter={
                 "telegram_id": message.chat.id
             })
@@ -23,7 +23,7 @@ class StopView(BaseView):
             )
 
     def private(self, message):
-        user, was_deleted = ModelManager(self.db, User).delete(
+        was_deleted = ModelManager(self.db, User).delete(
             filter={
                 "telegram_id": message.chat.id
             })
