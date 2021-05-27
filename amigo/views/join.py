@@ -13,6 +13,10 @@ class JoinView(BaseView):
             "telegram_id": message.chat.id
         })
 
+        if not chat:
+            self.bot.reply_to(message, "Chat is not started")
+            return
+
         if chat.status != ChatStatus.STARTED:
             self.bot.reply_to(
                 message,
@@ -21,13 +25,12 @@ class JoinView(BaseView):
             )
             return
 
-        user = ModelManager(self.db, User).get_object(filter={
-            "telegram_id": message.from_user.id
-        })
-
-        if not user:
-            self.bot.reply_to(message, "You are not start me in private chat")
-            return
+        user, _ = ModelManager(self.db, User).create(
+            allow_duplication=False,
+            args={
+                "telegram_id": message.from_user.id,
+                "username": message.from_user.username
+            })
 
         part, was_created = ModelManager(self.db, Participation).create(
             allow_duplication=False,
