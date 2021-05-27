@@ -3,6 +3,7 @@ import enum
 from sqlalchemy import Column, Integer, Enum, ForeignKey, Boolean
 from sqlalchemy.orm import relationship
 
+from amigo.models.participation import Participation
 from amigo.models.base import BaseModel
 from amigo.models.user import User
 
@@ -21,6 +22,7 @@ class Chat(BaseModel):
 
     organizer_id = Column(Integer, ForeignKey(User.id), nullable=True)
     organizer = relationship('User', foreign_keys='Chat.organizer_id')
+    participation = relationship(Participation, cascade="all,delete")
 
     is_offline_event = Column(Boolean, default=False, nullable=True)
 

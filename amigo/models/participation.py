@@ -4,8 +4,6 @@ from sqlalchemy import Column, Integer, ForeignKey, Enum, Text
 from sqlalchemy.orm import relationship
 
 from amigo.models.base import BaseModel
-from amigo.models.chat import Chat
-from amigo.models.user import User
 
 
 class ParticipationStatus(enum.Enum):
@@ -18,8 +16,8 @@ class ParticipationStatus(enum.Enum):
 
 class Participation(BaseModel):
     __tablename__ = 'participation'
-    user_id = Column(Integer, ForeignKey(User.id))
-    chat_id = Column(Integer, ForeignKey(Chat.id))
+    user_id = Column(Integer, ForeignKey('user.id', ondelete="CASCADE"))
+    chat_id = Column(Integer, ForeignKey('chat.id', ondelete="CASCADE"))
     user = relationship('User', foreign_keys='Participation.user_id')
     chat = relationship('Chat', foreign_keys='Participation.chat_id')
     status = Column(Enum(ParticipationStatus), nullable=True,
