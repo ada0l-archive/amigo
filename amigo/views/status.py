@@ -23,20 +23,20 @@ class StatusView(BaseView):
                 "chat": chat
             })
 
-        not_completed = ModelManager(self.db, Participation).get_objects(
-            filter={
-                "chat": chat,
-                "hobby": "",
-                "wishes": "",
-                "not_wishes": "",
-                "address": "",
-            })
+        not_filled_count = 0
+
+        for participant in participants:
+            if participant.hobby == "" or \
+                    participant.wishes == "" or \
+                    participant.not_wishes == "" or \
+                    participant.address == "":
+                not_filled_count += 1
 
         self.bot.reply_to(
             message,
             "Chat is started.\n"
             "The number of filled forms: "
-            f"{len(participants) - len(not_completed)}/{len(participants)}"
+            f"{len(participants) - not_filled_count}/{len(participants)}"
         )
 
     def private(self, message):
