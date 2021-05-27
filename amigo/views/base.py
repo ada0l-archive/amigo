@@ -1,6 +1,9 @@
+import functools
 from abc import ABC
 
 from telebot.types import CallbackQuery
+
+from amigo.models import ModelManager, Chat
 
 
 class BaseView(ABC):
@@ -13,7 +16,8 @@ class BaseView(ABC):
     def is_group(message):
         if isinstance(message, CallbackQuery):
             message = message.message
-        return message and message.chat.type == 'group'
+        return message and (message.chat.type == 'group' or
+                            message.chat.type == 'supergroup')
 
     @staticmethod
     def is_private(message):
@@ -42,10 +46,13 @@ class BaseView(ABC):
         return instance.main
 
     def main(self, message):
-        if self.is_private(message):
-            self.private(message)
-        if self.is_group(message):
-            self.group(message)
+        try:
+            if self.is_private(message):
+                self.private(message)
+            if self.is_group(message):
+                self.group(message)
+        except Exception as e:
+            print(e)
 
     def group(self, message):
         pass
