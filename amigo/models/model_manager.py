@@ -39,7 +39,7 @@ class ModelManager:
         return instance, True
 
     def update(self, filter: dict, values: dict) -> None:
-        #values["updated_at"] = datetime.now(timezone.utc)
+        values["updated_at"] = datetime.now(timezone.utc)
         self.db.session.query(self.obj).\
             filter_by(**filter).\
             update(values)
@@ -56,7 +56,7 @@ class ModelManager:
         if the object was deleted, then return the truth,
         otherwise return false
         """
-        instance = self.get_object(filter)
+        instance = self.get_object(filter=filter)
 
         if instance:
             self.db.session.delete(instance)
