@@ -32,20 +32,32 @@ class SendView(BaseView):
         chat_title = self.bot.get_chat(chat_id=chat.telegram_id).title
 
         all_complete = True
+
+        not_filled_users = ""
         for participant in participants:
             if participant.hobby == "" or \
                     participant.wishes == "" or \
-                    participant.not_wishes == "":
+                    participant.not_wishes == "" or \
+                    participant.address == "":
                 all_complete = False
-                self.bot.send_message(
-                    participant.user.telegram_id,
-                    "you didn't fill in the fields for the "
-                    f"{chat_title} group "
-                )
+                not_filled_users += f"@{participant.user.username} "
+                try:
+                    self.bot.send_message(
+                        participant.user.telegram_id,
+                        "you didn't fill in the fields for the "
+                        f"{chat_title} group "
+                    )
+                except Exception as _:
+                    pass
 
         if not all_complete:
-            self.bot.reply_to(message, "Not all participants filled in "
-                                       "the data ")
+            self.bot.reply_to(
+                message,
+                "Not all participants filled in "
+                f"the data. {not_filled_users}."
+                f"{self.get_link_to_me('Click to fill')}.",
+                parse_mode="HTML"
+            )
             return
 
         random.shuffle(participants)
