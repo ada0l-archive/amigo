@@ -65,13 +65,12 @@ class BaseView(ABC):
     def next(self, message, func):
         func.init(self.env, self.bot, self.db)(message)
 
-    @staticmethod
-    def get_markup_with_link_to_me():
+    def get_markup_with_link_to_me(self):
         markup = telebot.types.InlineKeyboardMarkup(row_width=1)
         markup.add(
             telebot.types.InlineKeyboardButton(
                 "Send me message",
-                url="https://t.me/amigo_456_bot"
+                url=f"https://t.me/{self.bot.get_me().username}"
             )
         )
         return markup
